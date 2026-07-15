@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Shree Hari Jewellers | Premium Luxury Showcase</title>
+    <meta name="description" content="Discover our luxury collections of bridal, casual, and hallmark gold jewellery. Visit Shree Hari Jewellers today.">
+    
+    <!-- Favicon (Local PNG) -->
+    <link rel="icon" type="image/png" href="assets/logo/favicon.png">
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Shree Hari Jewellers">
+    <meta property="og:description" content="Premium luxury jewellery showcase.">
+    <meta property="og:type" content="website">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* CSS Variables */
+        :root {
+            --bg-cream: #FAF5EE;
+            --text-dark: #111111;
+            --text-light: #666666;
+            --gold: #D4AF37;
+            --gold-light: #F4E5B8;
+            --gold-dark: #A68624;
+            --white: #FFFFFF;
+            --card-bg: #FDFBF7;
+            
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Inter', sans-serif;
+            
+            --shadow-premium: 0 15px 40px rgba(0,0,0,0.06);
+            --shadow-soft: 0 8px 25px rgba(0,0,0,0.04);
+            
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            
+            --max-width: 1440px;
+        }
+
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-cream);
+            font-family: var(--font-sans);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        #app {
+            width: 100%;
+            position: relative;
+        }
+
+        .container {
+            width: 100%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-serif);
+            font-weight: 500;
+        }
+
+        .section-title {
+            font-size: clamp(28px, 4vw, 40px);
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--text-dark);
+            letter-spacing: 1px;
+        }
+
+        p {
+            font-size: 15px;
+            color: var(--text-light);
+            font-weight: 300;
+        }
+
+        /* ================= NAVIGATION ================= */
+        .top-nav {
+            position: sticky;
+            top: 0;
+            background-color: rgba(250, 245, 238, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            transition: var(--transition);
+            padding: 10px 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .hamburger {
+            font-size: 28px;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        .desktop-links {
+            display: none;
+            gap: 35px;
+        }
+
+        .desktop-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-family: var(--font-sans);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .desktop-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -6px;
+            left: 0;
+            background-color: var(--gold);
+            transition: var(--transition);
+        }
+
+        .desktop-links a:hover::after, .desktop-links a.active::after {
+            width: 100%;
+        }
+
+        .brand-container {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            cursor: pointer;
+        }
+        
+        .nav-logo {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        /* Hamburger Sidebar */
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(3px);
+            z-index: 200;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 300px;
+            height: 100%;
+            background-color: var(--bg-cream);
+            z-index: 201;
+            transition: left 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            padding: 50px 30px;
+            box-shadow: var(--shadow-premium);
+        }
+
+        .sidebar.active { left: 0; }
+
+        .sidebar-close {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            font-size: 28px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .sidebar-close:hover { transform: rotate(90deg); color: var(--gold); }
+
+        .sidebar-links {
+            margin-top: 60px;
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+        }
+
+        .sidebar-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-family: var(--font-serif);
+            font-size: 24px;
+            transition: var(--transition);
+        }
+        .sidebar-links a:hover { color: var(--gold); padding-left: 10px; }
+
+        /* ================= PREMIUM BUTTON ================= */
+        .btn-visit {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 44px;
+            padding: 0 20px;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, #111111 0%, #222222 100%);
+            color: var(--gold-light);
+            font-family: var(--font-sans);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            text-decoration: none;
+            width: max-content;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .btn-visit { 
+                height: 52px; 
+                padding: 0 40px; 
+                font-size: 14px;
+                letter-spacing: 2.5px;
+            }
+        }
+
+        .popup-right .btn-visit { width: 100%; }
+
+        .btn-visit:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.25);
+            border-color: var(--gold);
+            color: var(--white);
+        }
+        
+        .btn-visit::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            animation: shine 5s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 200%; }
+            100% { left: 200%; }
+        }
+
+        /* ================= 4:1 ASPECT RATIO BANNERS ================= */
+        .banner-4x1 {
+            width: 100%;
+            aspect-ratio: 4/1;
+            position: relative;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 60px;
+        }
+
+        .banner-overlay-centered {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.3); /* Soft dark overlay */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .banner-title {
+            color: var(--white);
+            font-family: var(--font-serif);
+            font-size: clamp(24px, 5vw, 64px);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            animation: fadeUp 1s ease forwards;
+        }
+
+        /* Home Hero Slider Specific (NO Overlay, NO Text) */
+        .hero-slider-container {
+            width: 100%;
+            aspect-ratio: 4/1;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 60px;
+        }
+
+        .hero-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .hero-slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: clamp(5px, 2vw, 20px);
+            right: 5%;
+            display: flex;
+            gap: 10px;
+        }
+
+        .dot {
+            width: clamp(4px, 0.8vw, 8px);
+            height: clamp(4px, 0.8vw, 8px);
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.4);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .dot.active {
+            background-color: var(--gold);
+            transform: scale(1.5);
+            border: none;
+        }
+
+        /* ================= CIRCULAR CATEGORIES ================= */
+        .categories-section {
+            padding: 0 0 60px;
+        }
+
+        .category-circle-layout {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 10px 20px 20px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .category-circle-layout::-webkit-scrollbar { display: none; }
+
+        .category-circle {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            min-width: 100px;
+            transition: var(--transition);
+        }
+        
+        .category-circle:hover { transform: translateY(-5px); }
+
+        .category-circle img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            padding: 4px;
+            background-color: var(--white);
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .category-circle:hover img {
+            transform: scale(1.05);
+            border-color: var(--gold);
+            box-shadow: var(--shadow-premium);
+        }
+
+        .category-circle span {
+            font-family: var(--font-sans);
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 400;
+            color: var(--text-dark);
+            text-align: center;
+        }
+
+        /* ================= LUXURY PRODUCT CARDS ================= */
+        .featured-section {
+            padding: 0 0 80px;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding: 0 20px;
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 15px;
+            box-shadow: var(--shadow-soft);
+            cursor: pointer;
+            text-align: center;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-premium);
+            border-color: rgba(212, 175, 55, 0.5);
+        }
+
+        .product-img-wrapper {
+            width: 100%;
+            aspect-ratio: 1/1;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            background-color: #F5F5F5;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .product-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .card-divider {
+            width: 40px;
+            height: 1px;
+            background-color: var(--gold);
+            margin: 10px 0;
+            opacity: 0.5;
+        }
+
+        .product-gold {
+            font-family: var(--font-serif);
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .product-hallmark {
+            font-family: var(--font-sans);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--gold-dark);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* ================= CATEGORY PAGE FILTERS ================= */
+        .filter-chips {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding: 0 20px 40px;
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+        
+        .filter-chips::-webkit-scrollbar { display: none; }
+        
+        .chip {
+            padding: 10px 24px;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 30px;
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+            background-color: transparent;
+        }
+        
+        .chip.active, .chip:hover {
+            background-color: var(--text-dark);
+            color: var(--white);
+            border-color: var(--text-dark);
+        }
+
+        /* ================= FOOTER ================= */
+        footer {
+            background-color: var(--white);
+            padding: 80px 20px 40px;
+            border-top: 1px solid rgba(212, 175, 55, 0.15);
+            width: 100%;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 50px;
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .footer-brand { display: flex; flex-direction: column; align-items: flex-start; }
+        
+        .footer-logo {
+            height: 60px;
+            width: auto;
+            margin-bottom: 15px;
+        }
+
+        .footer-links-col h4 {
+            font-family: var(--font-sans);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            color: var(--gold-dark);
+        }
+
+        .footer-links { display: flex; flex-direction: column; gap: 15px; }
+        .footer-links a, .footer-links p { text-decoration: none; color: var(--text-light); font-size: 14px; transition: var(--transition); cursor: pointer; }
+        .footer-links a:hover { color: var(--gold); padding-left: 5px; }
+
+        .footer-divider {
+            height: 1px;
+            background-color: rgba(0,0,0,0.05);
+            margin: 50px auto 30px;
+            max-width: var(--max-width);
+        }
+
+        .footer-bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .social-icons { display: flex; gap: 25px; }
+        .social-icons i { font-size: 22px; color: var(--text-dark); transition: var(--transition); cursor: pointer; }
+        .social-icons i:hover { color: var(--gold); transform: scale(1.2); }
+        .copyright { font-size: 12px; color: var(--text-light); letter-spacing: 1px; }
+
+        /* ================= PRODUCT POPUP ================= */
+        .popup-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 300;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .popup-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .popup-content {
+            background: var(--bg-cream);
+            width: 100%;
+            border-radius: 30px 30px 0 0;
+            padding: 40px 25px;
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .popup-overlay.active .popup-content { transform: translateY(0); }
+
+        .popup-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 10;
+            transition: var(--transition);
+            box-shadow: var(--shadow-soft);
+        }
+        
+        .popup-close:hover { background: var(--text-dark); color: var(--white); transform: rotate(90deg); }
+
+        .popup-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .popup-left { width: 100%; }
+        
+        .popup-model-img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .popup-gallery { display: flex; gap: 15px; }
+        .popup-gallery img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 12px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+        .popup-gallery img:hover, .popup-gallery img.active { border-color: var(--gold); }
+
+        .popup-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .popup-title { font-size: 36px; margin-bottom: 15px; line-height: 1.2; }
+        .popup-desc { margin-bottom: 30px; font-size: 15px; line-height: 1.8; color: var(--text-light); }
+
+        .badge-row { display: flex; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
+        .badge {
+            display: flex; align-items: center; gap: 8px;
+            background: var(--white); padding: 10px 20px;
+            border-radius: 50px; font-size: 12px; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 1px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .badge i { color: var(--gold); font-size: 18px; }
+
+        /* ================= SPA VIEWS & ANIMATIONS ================= */
+        .view-section {
+            display: none;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .view-section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Static Page Specifics */
+        .page-text-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .large-image { width: 100%; max-height: 500px; object-fit: cover; border-radius: 20px; margin-bottom: 50px; }
+        
+        .contact-grid { display: grid; grid-template-columns: 1fr; gap: 30px; margin-bottom: 60px;}
+        .info-card { background: var(--white); padding: 40px 30px; border-radius: 20px; text-align: center; border: 1px solid rgba(0,0,0,0.05); transition: var(--transition); }
+        .info-card:hover { box-shadow: var(--shadow-premium); transform: translateY(-5px); }
+        .map-container { width: 100%; height: 400px; border-radius: 20px; overflow: hidden; margin-bottom: 40px; border: 1px solid rgba(0,0,0,0.05); }
+
+
+        /* =======================================================
+           RESPONSIVE BREAKPOINTS (Tablet & Desktop)
+           ======================================================= */
+        
+        @media (min-width: 768px) {
+            .featured-grid { grid-template-columns: repeat(3, 1fr); gap: 30px; }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-bottom { flex-direction: row; justify-content: space-between; }
+            .contact-grid { grid-template-columns: repeat(2, 1fr); }
+            .category-circle-layout { justify-content: center; }
+            .category-circle img { width: 120px; height: 120px; }
+        }
+
+        @media (min-width: 1024px) {
+            .hamburger { display: none; }
+            .desktop-links { display: flex; }
+            
+            .category-circle-layout { gap: 60px; overflow-x: visible; }
+            .category-circle img { width: 160px; height: 160px; border-width: 2px; }
+            .category-circle span { font-size: 14px; margin-top: 10px; }
+
+            .featured-grid { grid-template-columns: repeat(4, 1fr); gap: 40px; }
+            .product-card { padding: 25px; }
+
+            .footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; }
+            
+            .popup-overlay {
+                align-items: center;
+                padding: 40px;
+            }
+            .popup-content {
+                max-width: 1100px;
+                border-radius: 30px;
+                padding: 60px;
+                transform: scale(0.95);
+                opacity: 0;
+            }
+            .popup-overlay.active .popup-content {
+                transform: scale(1);
+                opacity: 1;
+            }
+            .popup-layout {
+                flex-direction: row;
+                gap: 60px;
+            }
+            .popup-left { flex: 1; }
+            .popup-right { flex: 1; }
+            .popup-model-img { height: 600px; }
+            .popup-title { font-size: 48px; }
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="app">
+    
+    <!-- Sidebar / Hamburger Menu (Mobile) -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div class="sidebar" id="sidebar">
+        <i class="ph ph-x sidebar-close" id="sidebarClose"></i>
+        <div class="sidebar-links">
+            <a href="#" data-link="home">Home</a>
+            <a href="#" data-link="category" data-param="bridal">Bridal</a>
+            <a href="#" data-link="category" data-param="casual">Casual</a>
+            <a href="#" data-link="about">Our Story</a>
+            <a href="#" data-link="contact">Contact & Store</a>
+        </div>
+    </div>
+
+    <!-- Top Navbar -->
+    <nav class="top-nav" id="topNav">
+        <div class="nav-container">
+            <div class="nav-left">
+                <i class="ph ph-list hamburger" id="hamburgerBtn"></i>
+                <div class="desktop-links">
+                    <a href="#" data-link="home" class="active">Home</a>
+                    <a href="#" data-link="category" data-param="bridal">Bridal</a>
+                    <a href="#" data-link="category" data-param="casual">Casual</a>
+                    <a href="#" data-link="about">About</a>
+                    <a href="#" data-link="contact">Contact</a>
+                </div>
+            </div>
+            
+            <div class="brand-container" onclick="navigateTo('home')">
+                <img src="assets/logo/logo.png" alt="Shree Hari Jewellers" class="nav-logo" onerror="this.outerHTML='<span class=\'brand-name\'>SHREE HARI</span>'">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area (SPA Views) -->
+    <main id="main-content">
+        
+        <!-- ================= HOME VIEW ================= -->
+        <section id="view-home" class="view-section active">
+            
+            <!-- 1. Hero Banner (4:1 Ratio) - ONLY Premium Image, No Text/Overlay -->
+            <div class="hero-slider-container">
+                <div class="hero-track" id="heroTrack">
+                    <!-- Slides injected by JS (WEBP forced local paths) -->
+                </div>
+                <div class="slider-dots" id="sliderDots">
+                    <!-- Dots injected by JS -->
+                </div>
+            </div>
+
+            <!-- 2. Categories (Circular Layout) -->
+            <div class="categories-section">
+                <div class="container">
+                    <div class="category-circle-layout" id="homeCategoryScroll">
+                        <!-- Categories injected by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Featured Collection -->
+            <div class="featured-section">
+                <h2 class="section-title">Signature Masterpieces</h2>
+                <div class="featured-grid" id="featuredGrid">
+                    <!-- Products injected by JS -->
+                </div>
+                <div style="text-align: center; margin-top: 60px;">
+                    <button class="btn-visit" onclick="openGoogleMaps()">Visit Store to Explore</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= CATEGORY VIEW ================= -->
+        <section id="view-category" class="view-section">
+            
+            <!-- Category 4:1 Banner - TEXT ONLY Centered -->
+            <div class="banner-4x1" id="categoryHero">
+                <div class="banner-overlay-centered">
+                    <h1 class="banner-title" id="categoryTitle">BRIDAL JEWELLERY</h1>
+                </div>
+            </div>
+            
+            <div class="container">
+                <div class="filter-chips" id="filterChips">
+                    <button class="chip active" data-filter="all">All Designs</button>
+                    <button class="chip" data-filter="Necklace">Necklaces</button>
+                    <button class="chip" data-filter="Ring">Rings</button>
+                    <button class="chip" data-filter="Earrings">Earrings</button>
+                    <button class="chip" data-filter="Bangle">Bangles</button>
+                </div>
+
+                <div class="featured-grid" id="categoryGrid" style="margin-bottom: 80px;">
+                    <!-- Products injected by JS -->
+                </div>
+                
+                <div style="text-align: center; margin-bottom: 100px;">
+                    <button class="btn-visit" onclick="openGoogleMaps()">Visit Store to Purchase</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= ABOUT VIEW ================= -->
+        <section id="view-about" class="view-section">
+            <!-- About 4:1 Banner - TEXT ONLY Centered -->
+            <div class="banner-4x1" id="aboutBanner" style="background-image: url('assets/about/banner.webp');">
+                <div class="banner-overlay-centered">
+                    <h1 class="banner-title">ABOUT US</h1>
+                </div>
+            </div>
+            
+            <div class="container page-text-container" style="margin-bottom: 100px;">
+                <h3 style="margin-bottom: 20px; font-size: 28px; color: var(--gold-dark);">A Legacy of Purity</h3>
+                <p style="margin-bottom: 40px; font-size: 16px;">Founded on the principles of trust and exquisite craftsmanship, Shree Hari Jewellers has been a symbol of purity for over three decades. Our journey began with a singular vision: to create masterpieces that transcend time and trends.</p>
+                
+                <!-- Lazy loaded WEBP with added error handling fallback -->
+                <img src="assets/about/story.webp" class="large-image" alt="Luxury Craftsmanship" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=800&q=80';">
+                
+                <h3 style="margin-bottom: 20px; font-size: 28px; color: var(--gold-dark);">Master Craftsmanship</h3>
+                <p style="margin-bottom: 40px; font-size: 16px;">Our master artisans dedicate countless hours to bring each design to life. By seamlessly blending age-old traditional techniques with modern aesthetics, we ensure every piece holds a story of dedication and unmatched skill.</p>
+
+                <h3 style="margin-bottom: 20px; font-size: 28px; color: var(--gold-dark);">Our Mission</h3>
+                <p style="margin-bottom: 50px; font-size: 16px;">To provide our patrons with jewellery that not only enhances their elegance but serves as a timeless investment. We strictly source the finest materials, ensuring every piece you purchase is 100% BIS Hallmarked.</p>
+
+                <button class="btn-visit" onclick="openGoogleMaps()">Visit Our Showroom</button>
+            </div>
+        </section>
+
+        <!-- ================= CONTACT & STORE VIEW ================= -->
+        <section id="view-contact" class="view-section">
+            <!-- Contact 4:1 Banner - TEXT ONLY Centered -->
+            <div class="banner-4x1" id="contactBanner" style="background-image: url('assets/contact/banner.webp');">
+                <div class="banner-overlay-centered">
+                    <h1 class="banner-title">CONTACT US</h1>
+                </div>
+            </div>
+            
+            <div class="container" style="max-width: 1100px; margin-bottom: 100px;">
+                
+                <div class="contact-grid" style="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));">
+                    
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div class="info-card" style="text-align: left; padding: 30px;">
+                            <i class="ph ph-map-pin" style="color:var(--gold); font-size: 32px; margin-bottom: 15px;"></i>
+                            <h4 style="margin-bottom:10px; font-size: 20px; font-family: var(--font-serif);">Flagship Showroom</h4>
+                            <p style="margin-bottom: 20px; font-size: 15px;">123 Luxury Avenue, Premium Block,<br>Mumbai, Maharashtra 400001</p>
+                            <button class="btn-visit" style="width: 100%; margin: 0; padding: 0;" onclick="openGoogleMaps()">Get Directions</button>
+                        </div>
+
+                        <div class="info-card" style="text-align: left; padding: 30px;">
+                            <i class="ph ph-clock" style="color:var(--gold); font-size: 32px; margin-bottom: 15px;"></i>
+                            <h4 style="margin-bottom:10px; font-size: 20px; font-family: var(--font-serif);">Opening Hours</h4>
+                            <p style="font-size: 15px; margin-bottom: 5px;">Monday - Saturday: 10:30 AM - 8:30 PM</p>
+                            <p style="font-size: 15px; color: var(--gold-dark);">Sunday: Closed</p>
+                        </div>
+                    </div>
+
+                    <div class="map-container" style="margin-bottom: 0; height: 100%;">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15082.910243464522!2d72.8257321!3d19.0759837!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6306644edc1%3A0x5da4ed8f8d648c69!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" width="100%" height="100%" style="border:0; min-height: 350px;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+                
+                <h3 class="section-title" style="margin-top: 60px; margin-bottom: 30px;">Reach Out To Us</h3>
+                
+                <div class="contact-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+                    <div class="info-card">
+                        <i class="ph ph-phone-call" style="font-size: 40px; color: var(--gold); margin-bottom: 15px;"></i>
+                        <h3 style="margin-bottom: 10px; font-size: 20px;">Call Our Experts</h3>
+                        <p style="font-size: 18px; color: var(--text-dark); font-weight: 500; margin-bottom: 5px;">+91 98765 43210</p>
+                        <p style="font-size: 13px;">Available during store hours.</p>
+                    </div>
+
+                    <div class="info-card">
+                        <i class="ph ph-whatsapp-logo" style="font-size: 40px; color: #25D366; margin-bottom: 15px;"></i>
+                        <h3 style="margin-bottom: 10px; font-size: 20px;">WhatsApp</h3>
+                        <p style="font-size: 18px; color: var(--text-dark); font-weight: 500; margin-bottom: 5px;">+91 98765 43210</p>
+                        <p style="font-size: 13px;">Quick replies within minutes.</p>
+                    </div>
+
+                    <div class="info-card">
+                        <i class="ph ph-envelope-simple" style="font-size: 40px; color: var(--gold); margin-bottom: 15px;"></i>
+                        <h3 style="margin-bottom: 10px; font-size: 20px;">Email Us</h3>
+                        <p style="font-size: 15px; color: var(--text-dark); font-weight: 500; margin-bottom: 5px;">hello@shreeharijewellers.com</p>
+                        <p style="font-size: 13px;">We reply within 24 hours.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ================= FOOTER ================= -->
+        <footer>
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="assets/logo/logo.png" alt="Shree Hari Logo" class="footer-logo" onerror="this.outerHTML='<h3 class=\'footer-title\'>SHREE HARI</h3>'">
+                    <p style="max-width: 250px; font-size: 14px;">Crafting timeless elegance and purity for generations. The ultimate destination for luxury jewellery.</p>
+                </div>
+                
+                <div class="footer-links-col">
+                    <h4>Collections</h4>
+                    <div class="footer-links">
+                        <a href="#" onclick="navigateTo('category', 'bridal')">Bridal</a>
+                        <a href="#" onclick="navigateTo('category', 'casual')">Casual</a>
+                        <a href="#" onclick="navigateTo('category', 'necklace')">Necklaces</a>
+                    </div>
+                </div>
+
+                <div class="footer-links-col">
+                    <h4>Discover</h4>
+                    <div class="footer-links">
+                        <a href="#" onclick="navigateTo('about')">Our Heritage</a>
+                        <a href="#" onclick="navigateTo('contact')">Store Location</a>
+                        <a href="#" onclick="navigateTo('contact')">Contact Us</a>
+                    </div>
+                </div>
+
+                <div class="footer-links-col">
+                    <h4>Contact</h4>
+                    <div class="footer-links">
+                        <p>+91 98765 43210</p>
+                        <p>hello@shreeharijewellers.com</p>
+                        <p>Mumbai, Maharashtra</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-divider"></div>
+            
+            <div class="footer-bottom">
+                <span class="copyright">&copy; 2026 Shree Hari Jewellers. All rights reserved.</span>
+                <div class="social-icons">
+                    <i class="ph ph-instagram-logo"></i>
+                    <i class="ph ph-facebook-logo"></i>
+                    <i class="ph ph-youtube-logo"></i>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- Product Popup (Modal / Bottom Sheet) -->
+    <div class="popup-overlay" id="productPopup">
+        <div class="popup-content">
+            <div class="popup-close" id="closePopup"><i class="ph ph-x"></i></div>
+            
+            <div class="popup-layout">
+                <!-- Left: Large Model Image -->
+                <div class="popup-left">
+                    <img src="" id="popupModelImg" class="popup-model-img" alt="Model wearing jewellery" style="margin-bottom: 0;">
+                </div>
+                
+                <!-- Right: Details -->
+                <div class="popup-right">
+                    <h2 class="popup-title" id="popupTitle">Product Name</h2>
+                    
+                    <div class="badge-row">
+                        <div class="badge"><i class="ph ph-medal"></i> <span id="popupGold">22K Gold</span></div>
+                        <div class="badge"><i class="ph ph-certificate"></i> BIS Hallmarked</div>
+                    </div>
+                    
+                    <button class="btn-visit" onclick="openGoogleMaps()">
+                        Visit Store to View
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    /* =========================================
+       0. GLOBAL FALLBACK ASSETS & MAPS REDIRECT
+       ========================================= */
+    const FALLBACK_PRODUCT = 'https://images.unsplash.com/photo-1599643478524-fb6664536694?auto=format&fit=crop&w=400&q=80';
+    const FALLBACK_MODEL = 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=600&q=80';
+    const FALLBACK_BANNER = 'https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?auto=format&fit=crop&w=1200&q=80';
+    const FALLBACK_CATEGORY = 'https://images.unsplash.com/photo-1589128777073-263566ae5e4d?auto=format&fit=crop&w=160&q=80';
+
+    function openGoogleMaps() {
+        const mapUrl = 'https://www.google.com/maps/search/123+Luxury+Avenue,+Premium+Block,+Mumbai,+Maharashtra+400001';
+        window.open(mapUrl, '_blank', 'noopener,noreferrer');
+    }
+
+    /* =========================================
+       1. DATA (Simulating products.json)
+       ========================================= */
+    const db = {
+        categories: [
+            { id: 'bridal', name: 'Bridal', image: 'assets/bridal/1.webp', banner: 'assets/banner/category/bridal.webp' },
+            { id: 'casual', name: 'Casual', image: 'assets/casual/1.webp', banner: 'assets/banner/category/casual.webp' },
+            { id: 'necklace', name: 'Necklace', image: 'assets/necklace/1.webp', banner: 'assets/banner/category/necklace.webp' },
+            { id: 'earrings', name: 'Earrings', image: 'assets/earrings/1.webp', banner: 'assets/banner/category/earrings.webp' },
+            { id: 'rings', name: 'Rings', image: 'assets/rings/1.webp', banner: 'assets/banner/category/rings.webp' }
+        ],
+        banners: [
+            { image: 'assets/banner/home/banner1.webp' },
+            { image: 'assets/banner/home/banner2.webp' },
+            { image: 'assets/banner/home/banner3.webp' },
+            { image: 'assets/banner/home/banner4.webp' },
+            { image: 'assets/banner/home/banner5.webp' }
+        ],
+        products: []
+    };
+
+    const allCategories = ['featured', 'bridal', 'casual', 'necklace', 'earrings', 'rings'];
+    const filterTypes = ['Necklace', 'Ring', 'Earrings', 'Bangle'];
+
+    allCategories.forEach(catId => {
+        for(let i = 1; i <= 16; i++) {
+            let pType = filterTypes[(i - 1) % filterTypes.length];
+            let niceName = catId === 'featured' ? 'Signature' : catId.charAt(0).toUpperCase() + catId.slice(1);
+
+            db.products.push({
+                id: `${catId}_${i}`,
+                name: `Royal ${niceName} Masterpiece`,
+                category: catId,
+                type: pType,
+                gold: '22K Gold',
+                productImage: `assets/${catId}/${i}.webp`,
+                modelImage: `assets/models/${catId}/${i}.webp`,
+                featured: catId === 'featured' 
+            });
+        }
+    });
+
+    /* =========================================
+       2. ROUTING & NAVIGATION (SPA Logic)
+       ========================================= */
+    const views = document.querySelectorAll('.view-section');
+    const desktopNavItems = document.querySelectorAll('.desktop-links a');
+    let currentCategory = '';
+
+    function navigateTo(viewId, params = null) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        views.forEach(v => {
+            v.classList.remove('active');
+            setTimeout(() => { if(!v.classList.contains('active')) v.style.display = 'none'; }, 500);
+        });
+        
+        const target = document.getElementById(`view-${viewId}`);
+        if(target) {
+            target.style.display = 'block';
+            setTimeout(() => target.classList.add('active'), 50);
+        }
+
+        desktopNavItems.forEach(nav => nav.classList.remove('active'));
+        const activeDesktop = document.querySelector(`.desktop-links a[data-link="${viewId}"]${params ? `[data-param="${params}"]` : ''}`);
+        if(activeDesktop) activeDesktop.classList.add('active');
+
+        closeSidebar();
+
+        if(viewId === 'category' && params) {
+            loadCategoryPage(params);
+        }
+    }
+
+    document.querySelectorAll('[data-link]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const view = e.currentTarget.getAttribute('data-link');
+            const param = e.currentTarget.getAttribute('data-param');
+            navigateTo(view, param);
+        });
+    });
+
+    /* =========================================
+       3. SIDEBAR (Hamburger)
+       ========================================= */
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+    document.getElementById('hamburgerBtn').addEventListener('click', () => {
+        sidebar.classList.add('active');
+        sidebarOverlay.classList.add('active');
+    });
+    
+    function closeSidebar() {
+        sidebar.classList.remove('active');
+        sidebarOverlay.classList.remove('active');
+    }
+
+    document.getElementById('sidebarClose').addEventListener('click', closeSidebar);
+    sidebarOverlay.addEventListener('click', closeSidebar);
+
+    /* =========================================
+       4. HERO SLIDER (STRICT 4:1)
+       ========================================= */
+    const heroTrack = document.getElementById('heroTrack');
+    const sliderDots = document.getElementById('sliderDots');
+    let currentSlide = 0;
+    let slideInterval;
+
+    function initSlider() {
+        db.banners.forEach((banner, idx) => {
+            const slide = document.createElement('div');
+            slide.className = 'hero-slide';
+            
+            // Check image existence, apply fallback if missing to maintain design
+            const img = new Image();
+            img.src = banner.image;
+            img.onload = () => slide.style.backgroundImage = `url('${banner.image}')`;
+            img.onerror = () => {
+                slide.style.backgroundImage = `url('${FALLBACK_BANNER}')`;
+            };
+            
+            heroTrack.appendChild(slide);
+
+            const dot = document.createElement('div');
+            dot.className = `dot ${idx === 0 ? 'active' : ''}`;
+            dot.onclick = () => goToSlide(idx);
+            sliderDots.appendChild(dot);
+        });
+
+        startSlider();
+        setupSwipe();
+    }
+
+    function goToSlide(idx) {
+        const total = db.banners.length;
+        currentSlide = (idx + total) % total;
+        heroTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+        
+        Array.from(sliderDots.children).forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentSlide);
+        });
+    }
+
+    function startSlider() { slideInterval = setInterval(() => goToSlide(currentSlide + 1), 5000); }
+    function stopSlider() { clearInterval(slideInterval); }
+
+    let startX = 0;
+    function setupSwipe() {
+        heroTrack.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; stopSlider(); }, {passive: true});
+        heroTrack.addEventListener('touchend', (e) => {
+            const diff = startX - e.changedTouches[0].clientX;
+            if(Math.abs(diff) > 50) diff > 0 ? goToSlide(currentSlide + 1) : goToSlide(currentSlide - 1);
+            startSlider();
+        });
+    }
+
+    /* =========================================
+       5. RENDERING LUXURY BOX CARDS & CIRCLES
+       ========================================= */
+    function createProductCard(prod) {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.onclick = () => openProductPopup(prod.id);
+        
+        // Added onerror gracefully falling back to maintaining UI dimensions
+        card.innerHTML = `
+            <div class="product-img-wrapper">
+                <img src="${prod.productImage}" alt="Luxury Jewellery" width="400" height="400" loading="lazy" 
+                     onerror="this.onerror=null; this.src='${FALLBACK_PRODUCT}';">
+            </div>
+            <div class="product-gold">${prod.gold}</div>
+            <div class="card-divider"></div>
+            <div class="product-hallmark"><i class="ph-fill ph-check-circle"></i> BIS Hallmarked</div>
+        `;
+        return card;
+    }
+
+    function renderFeatured() {
+        const grid = document.getElementById('featuredGrid');
+        grid.innerHTML = ''; 
+        db.products.filter(p => p.featured).forEach(prod => {
+            grid.appendChild(createProductCard(prod));
+        });
+    }
+
+    function renderCategories() {
+        const scroll = document.getElementById('homeCategoryScroll');
+        scroll.innerHTML = ''; 
+        db.categories.forEach(cat => {
+            const card = document.createElement('div');
+            card.className = 'category-circle';
+            // Added onerror for circular layout
+            card.innerHTML = `
+                <img src="assets/${cat.id}/1.webp" alt="${cat.name}" width="160" height="160" loading="lazy"
+                     onerror="this.onerror=null; this.src='${FALLBACK_CATEGORY}';">
+                <span>${cat.name}</span>
+            `;
+            card.onclick = () => navigateTo('category', cat.id);
+            scroll.appendChild(card);
+        });
+    }
+
+    /* =========================================
+       6. CATEGORY PAGE & FILTERING
+       ========================================= */
+    function loadCategoryPage(categoryId) {
+        currentCategory = categoryId;
+        const cat = db.categories.find(c => c.id === categoryId);
+        
+        document.getElementById('categoryTitle').textContent = cat.name.toUpperCase() + ' JEWELLERY';
+        
+        // Add robust fallback for CSS background-image
+        const catHeroEl = document.getElementById('categoryHero');
+        const img = new Image();
+        img.src = cat.banner;
+        img.onload = () => catHeroEl.style.backgroundImage = `url('${cat.banner}')`;
+        img.onerror = () => {
+            catHeroEl.style.backgroundImage = `url('${FALLBACK_BANNER}')`;
+        };
+        
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        document.querySelector('.chip[data-filter="all"]').classList.add('active');
+        
+        renderCategoryGrid('all');
+    }
+
+    function renderCategoryGrid(filterType) {
+        const grid = document.getElementById('categoryGrid');
+        grid.innerHTML = '';
+        
+        let filtered = db.products.filter(p => p.category === currentCategory);
+        if(filterType !== 'all') filtered = filtered.filter(p => p.type === filterType);
+
+        if(filtered.length === 0) {
+            grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; padding: 40px; font-size: 16px; color: var(--gold-dark);">No masterpieces currently available in this filter.</p>`;
+            return;
+        }
+
+        filtered.forEach(prod => grid.appendChild(createProductCard(prod)));
+    }
+
+    document.getElementById('filterChips').addEventListener('click', (e) => {
+        if(e.target.classList.contains('chip')) {
+            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+            e.target.classList.add('active');
+            renderCategoryGrid(e.target.getAttribute('data-filter'));
+        }
+    });
+
+    /* =========================================
+       7. PRODUCT POPUP
+       ========================================= */
+    const popupOverlay = document.getElementById('productPopup');
+    
+    function openProductPopup(productId) {
+        const prod = db.products.find(p => p.id === productId);
+        if(!prod) return;
+
+        const popupImg = document.getElementById('popupModelImg');
+        popupImg.src = prod.modelImage;
+        // Apply Fallback and log to console if model image is absent
+        popupImg.onerror = function() {
+            this.onerror = null;
+            this.src = FALLBACK_MODEL;
+        };
+        
+        document.getElementById('popupTitle').textContent = prod.name;
+        document.getElementById('popupGold').textContent = prod.gold;
+
+        popupOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden'; 
+    }
+
+    function closeProductPopup() {
+        popupOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    document.getElementById('closePopup').addEventListener('click', closeProductPopup);
+    popupOverlay.addEventListener('click', (e) => { if(e.target === popupOverlay) closeProductPopup(); });
+    document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && popupOverlay.classList.contains('active')) closeProductPopup(); });
+
+    /* =========================================
+       8. STATIC BANNER FALLBACK HANDLER
+       ========================================= */
+    function verifyStaticBanner(id, path) {
+        const el = document.getElementById(id);
+        if(!el) return;
+        const img = new Image();
+        img.src = path;
+        img.onerror = () => {
+            el.style.backgroundImage = `url('${FALLBACK_BANNER}')`;
+        };
+    }
+
+    /* =========================================
+       9. INITIALIZATION
+       ========================================= */
+    window.onload = () => {
+        initSlider();
+        renderCategories();
+        renderFeatured();
+
+        // Verify static banner backgrounds on load
+        verifyStaticBanner('aboutBanner', 'assets/about/banner.webp');
+        verifyStaticBanner('contactBanner', 'assets/contact/banner.webp');
+    };
+
+</script>
+</body>
+</html>
